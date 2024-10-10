@@ -1,0 +1,135 @@
+import { auth } from "@clerk/nextjs";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { User2, HelpCircle } from "lucide-react";
+
+import FormPopover from "@/components/form/form-popover";
+import Hint from "@/components/ui/hint";
+import { Skeleton } from "@/components/ui/skeleton";
+
+import { prisma } from "@/lib/prisma";
+import { getAvailableCount } from "@/lib/org-limit";
+import { MAX_FREE_BOARDS } from "@/constants/boards";
+import { checkSubscription } from "@/lib/subscription";
+
+const BoardList = async () => {
+    const { orgId } = auth();
+    
+    if (!orgId) {
+        return redirect("/select-org");
+    }
+
+    const boards = await prisma.board.findMany({
+        where: {
+            orgId: orgId
+        },
+        orderBy: {
+            createdAt: "desc"
+        }
+    });
+
+    const availableCount = await getAvailableCount();
+    const isPro = await checkSubscription();
+
+    return (
+        <div
+          className="space-y-4"
+        >
+            {/* <div
+              className="flex items-center font-semibold text-lg text-neutral-700"
+            >
+                <User2
+                  className="w-6 h-6 mr-2"
+                />
+                Your boards
+            </div> */}
+            <div
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+            >
+                {boards.map((board) => (
+                    <Link
+                      key={board.id}
+                      href={`/board/${board.id}`}
+                      className="group relative aspect-video bg-no-repeat bg-center bg-cover bg-blue-700 rounded-sm w-full h-full p-2 overflow-hidden"
+                      style={{
+                        backgroundImage: `url(${board.imageThumbUrl})`
+                      }}
+                    >
+                        <div
+                          className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition"
+                        />
+                        <p
+                          className="relative text-white font-semibold"
+                        >
+                            {board.title}
+                        </p>
+                    </Link>
+                ))}
+
+                <FormPopover
+                  side="right"
+                  sideOffset={10}
+                >
+                    <div
+                      className="aspect-video relative w-full h-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition"
+                      role="button"
+                    >
+                        <p
+                          className="text-sm"
+                        >
+                            Create new board
+                        </p>
+                        <span
+                          className="text-xs"
+                        >
+                            {isPro ? "Unlimited" : `${MAX_FREE_BOARDS - availableCount} remaining`}
+                        </span>
+                        <Hint
+                          sideOffest={40}
+                          description="Free workspaces can have up to 3 free boards. For unlimited boards, upgrade this workspace."
+                        >
+                            <HelpCircle
+                              className="absolute bottom-2 right-2 w-[14px] h-[14px]"
+                            />
+                        </Hint>
+                    </div>
+                </FormPopover>
+            </div>
+        </div>
+    );
+}
+ 
+export default BoardList;
+
+BoardList.Skeleton = function SkeletonBoardList () {
+    return (
+        <div
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+        >
+            <Skeleton
+              className="aspect-video w-full h-full"
+            />
+            <Skeleton
+              className="aspect-video w-full h-full"
+            />
+            <Skeleton
+              className="aspect-video w-full h-full"
+            />
+            <Skeleton
+              className="aspect-video w-full h-full"
+            />
+            <Skeleton
+              className="aspect-video w-full h-full"
+            />
+            <Skeleton
+              className="aspect-video w-full h-full"
+            />
+            <Skeleton
+              className="aspect-video w-full h-full"
+            />
+            <Skeleton
+              className="aspect-video w-full h-full"
+            />
+        </div>
+    )
+};
