@@ -12,28 +12,27 @@ interface BoardIdLayoutProps {
     }
 }
 
-export async function generateMetaData ({ params }: { params: { boardId: string } }) {
+export async function generateMetadata({ params }: { params: { boardId: string } }) {
     const { orgId } = auth();
 
     if (!orgId) {
         return {
-            title: "Board"
-        }
+            title: "Board",
+        };
     }
 
     // Fetch a board from the DB
     const board = await prisma.board.findUnique({
         where: {
             id: params.boardId,
-            orgId: orgId
-        }
+            orgId: orgId,
+        },
     });
 
     return {
-        title: board?.title || "Board"
-    }
-
-};
+        title: board?.title || "Board",
+    };
+}
 
 const BoardIdLayout = async ({ children, params }: { children: React.ReactNode, params: { boardId: string }}) => {
     const { orgId } = auth();
