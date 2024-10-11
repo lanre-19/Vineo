@@ -21,6 +21,7 @@ export async function generateMetaData ({ params }: { params: { boardId: string 
         }
     }
 
+    // Fetch a board from the DB
     const board = await prisma.board.findUnique({
         where: {
             id: params.boardId,
@@ -34,7 +35,7 @@ export async function generateMetaData ({ params }: { params: { boardId: string 
 
 };
 
-const BoardIdLayout = async ({ children, params }: BoardIdLayoutProps) => {
+const BoardIdLayout = async ({ children, params }: { children: React.ReactNode, params: { boardId: string }}) => {
     const { orgId } = auth();
 
     if (!orgId) {
