@@ -1,7 +1,7 @@
 import Sidebar from "../_components/sidebar";
 
 interface OrganizationLayoutProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const OrganizationLayout = ({ children }: OrganizationLayoutProps) => {

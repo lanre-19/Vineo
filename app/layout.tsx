@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-
-import { Toaster } from "@/components/ui/sonner";
 
 import { ThemeProvider } from "@/providers/theme-provider";
 import { siteConfig } from "@/config/site";

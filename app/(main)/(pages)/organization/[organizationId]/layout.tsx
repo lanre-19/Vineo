@@ -7,7 +7,7 @@ interface OrganizationIdLayoutProps {
     children: React.ReactNode;
 }
 
-export async function generateMetaData() {
+export async function generateMetadata() {
     const { orgSlug } = auth();
 
     return {
