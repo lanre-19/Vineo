@@ -5,13 +5,6 @@ import BoardNavbar from "./_components/board-navbar";
 
 import { prisma } from "@/lib/prisma";
 
-interface BoardIdLayoutProps {
-    children: React.ReactNode;
-    params: {
-        boardId: string;
-    }
-}
-
 export async function generateMetadata({ params }: { params: { boardId: string } }) {
     const { orgId } = auth();
 
