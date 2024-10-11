@@ -1,8 +1,9 @@
 import { auth } from "@clerk/nextjs";
 import { redirect, notFound } from "next/navigation";
 
-import { prisma } from "@/lib/prisma";
 import BoardNavbar from "./_components/board-navbar";
+
+import { prisma } from "@/lib/prisma";
 
 interface BoardIdLayoutProps {
     children: React.ReactNode;
@@ -11,7 +12,7 @@ interface BoardIdLayoutProps {
     }
 }
 
-export async function generatemetaData ({ params }: BoardIdLayoutProps) {
+export async function generateMetaData ({ params }: BoardIdLayoutProps) {
     const { orgId } = auth();
 
     if (!orgId) {
