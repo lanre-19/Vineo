@@ -12,7 +12,7 @@ interface BoardIdLayoutProps {
     }
 }
 
-export async function generateMetaData ({ params }: BoardIdLayoutProps) {
+export async function generateMetaData ({ params }: { params: { boardId: string } }) {
     const { orgId } = auth();
 
     if (!orgId) {
