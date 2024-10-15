@@ -2,6 +2,7 @@ import { Medal } from "lucide-react";
 import Link from "next/link";
 
 import { FlipWords } from "@/components/global/flip-words";
+import Image from "next/image";
 
 const LandingPage = () => {
 
@@ -55,6 +56,13 @@ const LandingPage = () => {
               Get Started For Free
             </span>
           </Link>
+
+          <div
+            className="relative aspect-video bg-no-repeat bg-center bg-cover rounded-2xl w-[70%] h-[70%] p-2 overflow-hidden border-[2px] border-gray-400 mb-[100px]"
+            style={{
+              backgroundImage: `url("/images/vineo_screenshot.png")`
+            }}
+          />
         </main>
     );
 }
