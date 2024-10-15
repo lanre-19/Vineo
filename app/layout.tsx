@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 import { ThemeProvider } from "@/providers/theme-provider";
 import { siteConfig } from "@/config/site";
@@ -28,7 +29,10 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <Analytics />
+          {children}
+        </body>
       </ThemeProvider>
     </html>
   );
